@@ -10,7 +10,6 @@ var Model = {
           console.log("error: ", err);
           result(err, null);
         } else {
-          console.log(res);
           chartdata = {
             labels: [],
             datasets: [
@@ -20,7 +19,11 @@ var Model = {
             ]
           };
           for (let i of res) {
-            chartdata.labels.push(i.hour);
+            if (i.hour < 10) {
+              chartdata.labels.push(`0${i.hour}:00`);
+            } else {
+              chartdata.labels.push(`${i.hour}:00`);
+            }
             chartdata.datasets[0].data.push(i.occ_reg_bays);
           }
           result(null, chartdata);
